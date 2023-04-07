@@ -2,7 +2,7 @@
 #### Author: Tra Le 
 #### Supervisor: Dr. Katrijn Van Deun
 #### Created: February 1, 2023
-#### Last modified: April 4, 2023
+#### Last modified: April 7, 2023
 
 #########################################################################################
 #####                  Preliminaries (only the measurement part)                    #####
@@ -144,6 +144,13 @@ RLSLV <- function(DATA, R, lambda, MaxIter, eps){
     iter <- iter + 1
     Lossc <- Lossu
   }
+  return_rlslv <- list()
+  return_rlslv$loadings <- loadings
+  return_rlslv$scores <- scores
+  return_rlslv$loss <- Loss
+  return_rlslv$lossvec <- Lossvec
+  
+  return(return_rlslv)
 }
 
 ###############################################################################
