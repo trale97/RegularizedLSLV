@@ -18,7 +18,7 @@ LOSS <- function(DATA, SCORES, LOADINGS, LAMBDA){
 }
 
 #2. REGULARIZED LSLV WITH THE LASSO
-RLSLV <- function(DATA, R, lambda, MaxIter, eps){
+LSLVLASSO <- function(DATA, R, lambda, MaxIter, eps){
   I <- dim(DATA)[1]
   J <- dim(DATA)[2]
   convAO <- 0
@@ -99,7 +99,7 @@ RLSLV <- function(DATA, R, lambda, MaxIter, eps){
 
 #3. MULTISTART PROCEDURE
 
-MULTISTART <- function(DATA, R, MaxIter, eps, nstarts, lambda){
+MULTISTART_LSLVLASSO <- function(DATA, R, MaxIter, eps, nstarts, lambda){
   if(missing(nstarts)){
     nstarts <- 20
   } 
@@ -110,7 +110,7 @@ MULTISTART <- function(DATA, R, MaxIter, eps, nstarts, lambda){
   LOSSvec <- list()
   
   for (n in 1:nstarts){
-    result <- RLSLV(DATA, R, lambda, MaxIter, eps)
+    result <- LSLVLASSO(DATA, R, lambda, MaxIter, eps)
     
     Pout3d[[n]] <- result$loadings
     Tout3d[[n]] <- result$scores
@@ -133,7 +133,7 @@ MULTISTART <- function(DATA, R, MaxIter, eps, nstarts, lambda){
   return(return_varselect)
 }
 
-###function Zhengguo for recovery rate
+###function for recovery rate
 num_correct <- function (TargetP, EstimatedP){
   total_vnumber <- dim(TargetP)[1] * dim(TargetP)[2]
   TargetP[which(TargetP != 0)] <- 1
@@ -162,7 +162,7 @@ findLasso <- function(dat, Ptrue, maxItr, lassou){
   while(conv0 == 0){
     
     lasso <- (lassol + lassou) / 2
-    fit <- MULTISTART(dat, lambda = lasso, R = 3, MaxIter = 200, eps = 10^-6, nstarts = 20)
+    fit <- MULTISTART_LSLVLASSO(dat, lambda = lasso, R = 3, MaxIter = 200, eps = 10^-6, nstarts = 20)
     percentageInW <- sum(round(fit$loadings,3) == 0)
     if( percentageZeroesInData > percentageInW){
       lassol  <- lasso
@@ -195,5 +195,30 @@ findLasso <- function(dat, Ptrue, maxItr, lassou){
   
   return(list(lasso = lasso, converged = converged))
 }
+
+##### MODEL SELECTION
+# index of sparseness 
+IS_LSLVLASSO <- function(DATA, R, lambda, MaxIter, eps, nstarts){
+  J <- dim(DATA)[2]
+  
+  VarSelect0 <- MULTISTART_LSLVLASSO(DATA, R, lambda = 0, MaxIter, eps, nstarts)
+  P_hat0 <- VarSelect0$loadings
+  T_hat0 <- VarSelect0$scores
+  
+  V_oo <- sum(DATA^2)
+  V_s <- sum((T_hat0%*%t(P_hat0))^2) 
+  
+  VarSelect <- MULTISTART_LSLVLASSO(DATA, R, lambda, MaxIter, eps, nstarts)
+  P_hat <- VarSelect$loadings
+  T_hat <- VarSelect$scores
+  
+  V_a <- sum((T_hat %*% t(P_hat))^2)
+  IS <- list()
+  IS$value <- (V_a * V_s / V_oo^2) * (sum(round(P_hat,3) == 0) /(J*R))
+  IS$vaf <- V_a/V_oo
+  IS$nzero <- sum(round(P_hat,3) == 0)
+  return(IS)
+}
+
 
 
