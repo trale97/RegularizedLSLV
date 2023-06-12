@@ -5,11 +5,11 @@
 #### Last modified: May 29, 2023
 
 #########################################################################################
-#####                  USLPCA function for orthogonal components                    #####
+#####                  CCLSLV function for orthogonal components                    #####
 #########################################################################################
 
-##1. USLPCA function 
-USLPCA <- function(DATA, R, CARD, MaxIter, eps) {
+##1. CCLSLV function 
+CCLSLV <- function(DATA, R, CARD, MaxIter, eps) {
   J <- dim(DATA)[2]
   I <- dim(DATA)[1]
   convAO <- 0
@@ -108,7 +108,7 @@ INITLOADINGS <- function(DATA, R, CARD){
   return(loadings)
 }
 
-###function Zhengguo for recovery rate
+###function for recovery rate
 num_correct <- function (TargetP, EstimatedP){
   total_vnumber <- dim(TargetP)[1] * dim(TargetP)[2]
   TargetP[which(TargetP != 0)] <- 1
@@ -123,7 +123,7 @@ num_correct <- function (TargetP, EstimatedP){
 #########################################################################################
 #####                             Multistart procedure                              #####
 #########################################################################################
-MULTISTART_USLPCA <- function(DATA, R, CARD, MaxIter, eps, nstarts){
+MULTISTART_CCLSLV <- function(DATA, R, CARD, MaxIter, eps, nstarts){
   if(missing(nstarts)){
     nstarts <- 20
   } 
@@ -138,7 +138,7 @@ MULTISTART_USLPCA <- function(DATA, R, CARD, MaxIter, eps, nstarts){
   LOSSvec <- list()
   
   for (n in 1:nstarts){
-    result <- USLPCA(DATA, R, CARD, MaxIter, eps)
+    result <- CCLSLV(DATA, R, CARD, MaxIter, eps)
     
     Pout3d[[n]] <- result$loadings
     Tout3d[[n]] <- result$scores
@@ -161,9 +161,9 @@ MULTISTART_USLPCA <- function(DATA, R, CARD, MaxIter, eps, nstarts){
   return(return_varselect)
 }
 
-IS_USLPCA <- function(X, R, card, MaxIter, eps, nstarts){
-  #1. Obtain USLPCA solution
-  USLPCA <- MULTISTART_USLPCA(X, R, CARD = card, MaxIter, eps, nstarts)
+IS_CCLSLV <- function(X, R, card, MaxIter, eps, nstarts){
+  #1. Obtain CCLSLV solution
+  CCLSLV <- MULTISTART_CCLSLV(X, R, CARD = card, MaxIter, eps, nstarts)
   #2. Calculate BIC
   ssrespca <- 0
   J <- dim(X)[2]
@@ -181,13 +181,13 @@ IS_USLPCA <- function(X, R, card, MaxIter, eps, nstarts){
   for (jr in 1:(J*R)){
     dfjspca <- dfjspca+length(unique(loading[jr][loading[jr]!=0]))
   }
-  bicvalue <- USLPCA$Loss/ssrespca+log(dfjspca)
-  vs <- vzero-USLPCA$Loss
+  bicvalue <- CCLSLV$Loss/ssrespca+log(dfjspca)
+  vs <- vzero-CCLSLV$Loss
   nrcoef <- J*R
   nrzeqcoef <- nrcoef-dfjspca
   IS <- list()
   IS$value <- va*vs/vzero^2*nrzeqcoef/nrcoef
-  IS$vaf <- 1-(USLPCA$Loss/vzero)
+  IS$vaf <- 1-(CCLSLV$Loss/vzero)
   IS$propunique <- dfjspca/(nrcoef-nrzero)
   IS$propzero <- nrzero/nrcoef
   #return(bicvalue)
