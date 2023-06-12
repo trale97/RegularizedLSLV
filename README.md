@@ -14,3 +14,7 @@ Folder [Functions] contains all the functions needed for the two methods: [CCLSL
 ## Simulation Study
 - Step 1: Run [corrmatrix.R](corrmatrix.R) to generate the population correlation matrix
 - Step 2: Run [datageneration_orthogonal.R](datageneration_orthogonal.R) and [datageneration_correlated](datageneration_correlated.R) to generate data for orthogonal and correlated latent variables scenarios, respectively. 
+- Step 3: Run one of the sim_*method*.R file to analyze the simulated data with one of the methods. For example, run [sim_CCLSLV.R](sim_CCLSLV.R) to run the analysis using the proposed method with cardinality constraint.
+
+## Empirical Data Application
+The folder [Application](Application) contains two files: [bigfive.R](bigfive.R) to analyze the Big Five Personality Data using all methods and [empirical_genetic.R](empirical_genetic.R) to analyze the Gene Expression data using the two proposed methods. 
