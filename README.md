@@ -1,4 +1,4 @@
-Functions, simulation study and empirical data application for Regularized Least Square Latent Variable method (RLSLV).
+Functions, simulation study and empirical data application for Regularized Least Square Latent Variable method (Regularized LS-LV).
 
 ## Authors
 - Tra T. Le | Tilburg University
