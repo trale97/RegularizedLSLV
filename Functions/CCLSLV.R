@@ -174,7 +174,7 @@ IS_CCLSLV <- function(X, R, card, MaxIter, eps, nstarts){
   vzero <- sum(rowSums(X^2))
   d <- svd(X)$d
   ssrespca <- ssrespca+sum((d[(R+1):length(d)])^2)
-  loading <- c(round(USLPCA$loadings,3))
+  loading <- c(round(CCLSLV$loadings,3))
   va <- va+sum((d[1:R])^2)
   nrzero <- nrzero+sum(loading==0)
   dfjspca <- 0
