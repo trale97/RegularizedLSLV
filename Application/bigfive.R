@@ -29,7 +29,7 @@ CCLSLV_model <- MULTISTART_CCLSLV(DATA, R = 5, CARD = rep(CARDvec2[which.max(IS2
 CCLSLV_loadings <- CCLSLV_model$loadings
 
 ### LSLV-LASSO (need to try several lambda values to get the same level of sparseness with CCLSLV)
-LSLVLASSO_model <- MULTISTART_LSLV(DATA, R = 5, MaxIter = 200, eps = 10^-6, nstarts = 10, lambda = 208)
+LSLVLASSO_model <- MULTISTART_LSLVLASSO(DATA, R = 5, MaxIter = 200, eps = 10^-6, nstarts = 10, lambda = 208)
 LSLVLASSO_loadings <- LSLVLASSO_model$loadings
 
 ### SGCCA (try several sparsity values)
