@@ -31,6 +31,12 @@ CCLSLV_loadings <- CCLSLV_model$loadings
 ### LSLV-LASSO (need to try several lambda values to get the same level of sparseness with CCLSLV)
 LSLVLASSO_model <- MULTISTART_LSLVLASSO(DATA, R = 5, MaxIter = 200, eps = 10^-6, nstarts = 10, lambda = 208)
 LSLVLASSO_loadings <- LSLVLASSO_model$loadings
+LSLVLASSO_scores <- LSLVLASSO_model$scores
+V_a <- sum((LSLVLASSO_scores %*% t(LSLVLASSO_loadings))^2)
+V_oo <- sum(DATA^2)
+PEV <- V_a/V_oo #formula from Zhengguo
+# double check with another formula
+PEV <- 1-(LSLVLASSO_model$Loss/V_oo)  
 
 ### SGCCA (try several sparsity values)
 blocks <- list(bl1 = DATA)
