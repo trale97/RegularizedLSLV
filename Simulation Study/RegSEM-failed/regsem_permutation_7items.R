@@ -165,7 +165,7 @@ Simulation_regSEM7 = foreach(i = 701:900,
                                              beta_composite = beta1, beta_factor = beta2,
                                              measures = measure_summary)
                                
-                               save(output, file = paste0("CORRELATED/fixed/Nov24/regSEM", i, ".RData"))
+                               save(output, file = paste0("CORRELATED/IS/Nov24/regSEM", i, ".RData"))
                                
                              }
 
