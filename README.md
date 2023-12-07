@@ -9,7 +9,11 @@ The repository consists of accompanying codes for the Master's thesis of the Res
 Here, you can find the **functions** developed in R to implement the method, the codes for the **Simulation Study** and **Empirical Data Analysis**.
 
 ## Functions
-Folder [Functions](Functions) contains all the functions needed for the two methods: [CCLSLV.R](Functions/CCLSLV.R) for the cardinality constrained approach and [LSLVLASSO.R](Functions/LSLVLASSO.R) for the one with the LASSO penalty. Each file also includes functions to run **Model Selection** based on the Index of Spareness.
+Folder [Functions](Functions) contains all the functions needed for the two methods: 
+- [CCLSLV.R](Functions/CCLSLV.R) for the cardinality constrained approach.
+- [LSLVLASSO.R](Functions/LSLVLASSO.R) for the one with the LASSO penalty.
+- [LSLVL_undoshrinkage.R](Functions/LSLVL_undoshrinkage.R) to undo the shrinkage for nonzero loadings.
+The first two files also include functions to run **Model Selection** based on the Index of Spareness.
 
 ## Simulation Study
 - Step 1: Run [corrmatrix.R](corrmatrix.R) to generate the population correlation matrix
