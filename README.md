@@ -24,3 +24,5 @@ Additionally, the subfolder [RegSEM-failed](https://github.com/trale97/Regulariz
 
 ## Empirical Data Application
 The folder [Application](Application) contains two files: [bigfive.R](bigfive.R) to analyze the Big Five Personality Data using all methods and [empirical_genetic.R](empirical_genetic.R) to analyze the Gene Expression data using the two proposed methods. 
+- The Big Five data set can be obtained from the R package *qgraph* (Epskamp et al., 2012).
+- The Gene Expression data set can be obtained from the NCBI GEO database using GEO accession number GSE7329 (or download directly from [here](https://ftp.ncbi.nlm.nih.gov/geo/series/GSE7nnn/GSE7329/matrix/GSE7329_series_matrix.txt.gz)).
