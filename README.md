@@ -1,8 +1,9 @@
 Functions, simulation study and empirical data application for Regularized Least Square Latent Variable method (Regularized LS-LV).
 
 ## Authors
-- Tra T. Le | Tilburg University
-- Dr. Katrijn Van Deun (Supervisor)
+- Tra T. Le 
+- Prof. dr. Jeroen Vermunt
+- Prof. dr. Katrijn Van Deun
 
 ## Description
 The repository consists of accompanying codes for the Master's thesis of the Research Master in Social and Behavioral Science at Tilburg University. We developed the RLSLV method as an alternative for (exploratory) structural equation modeling in the high-dimensional data setting (small n, large p).
